@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planos - StreamMax IPTV</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .plans-detailed {
+            padding: 120px 0 80px;
+            background: #f8f9fa;
+        }
+        
+        .plan-detailed {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .plan-detailed.featured {
+            border: 3px solid #007bff;
+            position: relative;
+        }
+        
+        .plan-detailed .plan-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #28a745;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .plan-header-detailed {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .plan-info h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #343a40;
+            margin-bottom: 0.5rem;
+        }
+        
+        .plan-description {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+        
+        .plan-price-detailed {
+            text-align: right;
+        }
+        
+        .plan-price-detailed .amount {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #007bff;
+        }
+        
+        .plan-price-detailed .currency {
+            font-size: 1.5rem;
+            vertical-align: top;
+        }
+        
+        .plan-price-detailed .period {
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+        
+        .plan-features-detailed {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-category h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 0.5rem;
+        }
+        
+        .feature-category ul {
+            list-style: none;
+        }
+        
+        .feature-category li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .feature-category i {
+            color: #28a745;
+            font-size: 1rem;
+        }
+        
+        .plan-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .comparison-table {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 4rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .comparison-table h3 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #343a40;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .comparison-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #343a40;
+        }
+        
+        .comparison-table .featured-col {
+            background: rgba(0, 123, 255, 0.05);
+        }
+        
+        .check-icon {
+            color: #28a745;
+            font-size: 1.2rem;
+        }
+        
+        .cross-icon {
+            color: #dc3545;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-play-circle"></i>
+                    <span>StreamMax</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Início</a></li>
+                    <li><a href="planos.html" class="nav-link">Planos</a></li>
+                    <li><a href="index.html#como-funciona" class="nav-link">Como Funciona</a></li>
+                    <li><a href="index.html#contato" class="nav-link">Contato</a></li>
+                    <li><a href="index.html#sobre" class="nav-link">Sobre</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Plans Detailed Section -->
+    <section class="plans-detailed">
+        <div class="container">
+            <h1 class="section-title">Nossos Planos IPTV</h1>
+            <p style="text-align: center; font-size: 1.2rem; color: #6c757d; margin-bottom: 4rem;">
+                Escolha o plano ideal para suas necessidades de entretenimento
+            </p>
+
+            <!-- Plano Básico -->
+            <div class="plan-detailed">
+                <div class="plan-header-detailed">
+                    <div class="plan-info">
+                        <h2>Plano Básico</h2>
+                        <p class="plan-description">Perfeito para quem está começando no mundo do IPTV</p>
+                    </div>
+                    <div class="plan-price-detailed">
+                        <span class="currency">R$</span>
+                        <span class="amount">29</span>
+                        <span class="period">/mês</span>
+                    </div>
+                </div>
+                
+                <div class="plan-features-detailed">
+                    <div class="feature-category">
+                        <h4><i class="fas fa-tv"></i> Canais de TV</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 500+ Canais IPTV</li>
+                            <li><i class="fas fa-check"></i> Canais Brasileiros</li>
+                            <li><i class="fas fa-check"></i> Canais Internacionais</li>
+                            <li><i class="fas fa-check"></i> Canais de Esportes</li>
+                            <li><i class="fas fa-check"></i> Canais Infantis</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-category">
+                        <h4><i class="fas fa-film"></i> Filmes e Séries</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Catálogo de Filmes</li>
+                            <li><i class="fas fa-check"></i> Séries Nacionais</li>
+                            <li><i class="fas fa-check"></i> Séries Internacionais</li>
+                            <li><i class="fas fa-check"></i> Documentários</li>
+                            <li><i class="fas fa-check"></i> Animes</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-category">
+                        <h4><i class="fas fa-cog"></i> Recursos Técnicos</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Qualidade HD</li>
+                            <li><i class="fas fa-check"></i> 1 Dispositivo Simultâneo</li>
+                            <li><i class="fas fa-check"></i> Suporte por Email</li>
+                            <li><i class="fas fa-check"></i> Guia de Instalação</li>
+                            <li><i class="fas fa-check"></i> Atualizações Automáticas</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="plan-actions">
+                    <button class="btn btn-outline" onclick="selectPlan('basico', 29)">
+                        <i class="fas fa-shopping-cart"></i>
+                        Escolher Plano
+                    </button>
+                    <button class="btn btn-secondary" onclick="openWhatsApp('Básico')">
+                        <i class="fab fa-whatsapp"></i>
+                        Falar no WhatsApp
+                    </button>
+                </div>
+            </div>
+
+            <!-- Plano Premium -->
+            <div class="plan-detailed featured">
+                <div class="plan-badge">Mais Popular</div>
+                <div class="plan-header-detailed">
+                    <div class="plan-info">
+                        <h2>Plano Premium</h2>
+                        <p class="plan-description">A escolha ideal para famílias e entusiastas</p>
+                    </div>
+                    <div class="plan-price-detailed">
+                        <span class="currency">R$</span>
+                        <span class="amount">49</span>
+                        <span class="period">/mês</span>
+                    </div>
+                </div>
+                
+                <div class="plan-features-detailed">
+                    <div class="feature-category">
+                        <h4><i class="fas fa-tv"></i> Canais de TV</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 1000+ Canais IPTV</li>
+                            <li><i class="fas fa-check"></i> Canais Premium</li>
+                            <li><i class="fas fa-check"></i> Canais de Esportes Premium</li>
+                            <li><i class="fas fa-check"></i> Canais Adultos</li>
+                            <li><i class="fas fa-check"></i> Canais 24h</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-category">
+                        <h4><i class="fas fa-film"></i> Filmes e Séries</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Catálogo Premium</li>
+                            <li><i class="fas fa-check"></i> Lançamentos Recentes</li>
+                            <li><i class="fas fa-check"></i> Séries Exclusivas</li>
+                            <li><i class="fas fa-check"></i> Conteúdo P2P</li>
+                            <li><i class="fas fa-check"></i> Dublado e Legendado</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-category">
+                        <h4><i class="fas fa-cog"></i> Recursos Técnicos</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Qualidade 4K</li>
+                            <li><i class="fas fa-check"></i> 3 Dispositivos Simultâneos</li>
+                            <li><i class="fas fa-check"></i> Suporte 24/7</li>
+                            <li><i class="fas fa-check"></i> EPG Completo</li>
+                            <li><i class="fas fa-check"></i> Catch-up TV</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="plan-actions">
+                    <button class="btn btn-primary" onclick="selectPlan('premium', 49)">
+                        <i class="fas fa-shopping-cart"></i>
+                        Escolher Plano
+                    </button>
+                    <button class="btn btn-secondary" onclick="openWhatsApp('Premium')">
+                        <i class="fab fa-whatsapp"></i>
+                        Falar no WhatsApp
+                    </button>
+                </div>
+            </div>
+
+            <!-- Plano Família -->
+            <div class="plan-detailed">
+                <div class="plan-header-detailed">
+                    <div class="plan-info">
+                        <h2>Plano Família</h2>
+                        <p class="plan-description">Máximo entretenimento para toda a família</p>
+                    </div>
+                    <div class="plan-price-detailed">
+                        <span class="currency">R$</span>
+                        <span class="amount">79</span>
+                        <span class="period">/mês</span>
+                    </div>
+                </div>
+                
+                <div class="plan-features-detailed">
+                    <div class="feature-category">
+                        <h4><i class="fas fa-tv"></i> Canais de TV</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 1500+ Canais IPTV</li>
+                            <li><i class="fas fa-check"></i> Todos os Canais Premium</li>
+                            <li><i class="fas fa-check"></i> Canais Internacionais VIP</li>
+                            <li><i class="fas fa-check"></i> Canais de Esportes Exclusivos</li>
+                            <li><i class="fas fa-check"></i> Canais Regionais</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-category">
+                        <h4><i class="fas fa-film"></i> Filmes e Séries</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Catálogo Completo</li>
+                            <li><i class="fas fa-check"></i> Lançamentos Exclusivos</li>
+                            <li><i class="fas fa-check"></i> Séries Originais</li>
+                            <li><i class="fas fa-check"></i> Conteúdo P2P Premium</li>
+                            <li><i class="fas fa-check"></i> Multi-idiomas</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-category">
+                        <h4><i class="fas fa-cog"></i> Recursos Técnicos</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Qualidade 4K Ultra</li>
+                            <li><i class="fas fa-check"></i> 5 Dispositivos Simultâneos</li>
+                            <li><i class="fas fa-check"></i> Suporte Prioritário</li>
+                            <li><i class="fas fa-check"></i> Perfis Personalizados</li>
+                            <li><i class="fas fa-check"></i> Gravação de Programas</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="plan-actions">
+                    <button class="btn btn-outline" onclick="selectPlan('familia', 79)">
+                        <i class="fas fa-shopping-cart"></i>
+                        Escolher Plano
+                    </button>
+                    <button class="btn btn-secondary" onclick="openWhatsApp('Família')">
+                        <i class="fab fa-whatsapp"></i>
+                        Falar no WhatsApp
+                    </button>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="comparison-table">
+                <h3>Comparação de Planos</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Recursos</th>
+                                <th>Básico</th>
+                                <th class="featured-col">Premium</th>
+                                <th>Família</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Canais IPTV</strong></td>
+                                <td>500+</td>
+                                <td class="featured-col">1000+</td>
+                                <td>1500+</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Qualidade</strong></td>
+                                <td>HD</td>
+                                <td class="featured-col">4K</td>
+                                <td>4K Ultra</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dispositivos Simultâneos</strong></td>
+                                <td>1</td>
+                                <td class="featured-col">3</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conteúdo P2P</strong></td>
+                                <td><i class="fas fa-times cross-icon"></i></td>
+                                <td class="featured-col"><i class="fas fa-check check-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Suporte 24/7</strong></td>
+                                <td><i class="fas fa-times cross-icon"></i></td>
+                                <td class="featured-col"><i class="fas fa-check check-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Catch-up TV</strong></td>
+                                <td><i class="fas fa-times cross-icon"></i></td>
+                                <td class="featured-col"><i class="fas fa-check check-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gravação</strong></td>
+                                <td><i class="fas fa-times cross-icon"></i></td>
+                                <td class="featured-col"><i class="fas fa-times cross-icon"></i></td>
+                                <td><i class="fas fa-check check-icon"></i></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Preço Mensal</strong></td>
+                                <td><strong>R$ 29</strong></td>
+                                <td class="featured-col"><strong>R$ 49</strong></td>
+                                <td><strong>R$ 79</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-play-circle"></i>
+                        <span>StreamMax</span>
+                    </div>
+                    <p>Entretenimento premium ao seu alcance.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="planos.html">Planos</a></li>
+                        <li><a href="index.html#como-funciona">Como Funciona</a></li>
+                        <li><a href="index.html#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>WhatsApp: (11) 99999-9999</p>
+                    <p>Email: contato@streammax.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 StreamMax. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Plan selection function
+        function selectPlan(planType, price) {
+            // Store selected plan in localStorage
+            localStorage.setItem('selectedPlan', JSON.stringify({
+                type: planType,
+                price: price,
+                name: planType.charAt(0).toUpperCase() + planType.slice(1)
+            }));
+            
+            // Redirect to contact page or show modal
+            window.location.href = 'index.html#contato';
+        }
+    </script>
+</body>
+</html>
+

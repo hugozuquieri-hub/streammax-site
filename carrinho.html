@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - StreamMax IPTV</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .cart-section {
+            padding: 120px 0 80px;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        
+        .cart-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .cart-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 3rem;
+        }
+        
+        .cart-items {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cart-summary {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .item-details {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-description {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-features {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .feature-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .item-price {
+            text-align: right;
+        }
+        
+        .price-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #007bff;
+        }
+        
+        .price-period {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .remove-item {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        
+        .remove-item:hover {
+            background: rgba(220, 53, 69, 0.1);
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+        
+        .empty-cart i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #dee2e6;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .summary-row:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #007bff;
+        }
+        
+        .checkout-form {
+            margin-top: 2rem;
+        }
+        
+        .form-section {
+            margin-bottom: 2rem;
+        }
+        
+        .form-section h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #343a40;
+        }
+        
+        .payment-methods {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            border-color: #007bff;
+        }
+        
+        .payment-method.selected {
+            border-color: #007bff;
+            background: rgba(0, 123, 255, 0.05);
+        }
+        
+        .payment-method input[type="radio"] {
+            margin: 0;
+        }
+        
+        .payment-icon {
+            font-size: 1.5rem;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .pix-icon { color: #32bcad; }
+        .card-icon { color: #007bff; }
+        .boleto-icon { color: #ff6b35; }
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .cart-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-summary {
+                position: static;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .item-features {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-play-circle"></i>
+                    <span>StreamMax</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Início</a></li>
+                    <li><a href="planos.html" class="nav-link">Planos</a></li>
+                    <li><a href="index.html#como-funciona" class="nav-link">Como Funciona</a></li>
+                    <li><a href="index.html#contato" class="nav-link">Contato</a></li>
+                    <li><a href="index.html#sobre" class="nav-link">Sobre</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <div class="cart-container">
+            <h1 class="section-title">Seu Carrinho</h1>
+            
+            <div class="cart-content">
+                <!-- Cart Items -->
+                <div class="cart-items">
+                    <h3 style="margin-bottom: 1.5rem; color: #343a40;">Itens Selecionados</h3>
+                    
+                    <div id="cart-items-container">
+                        <!-- Items will be loaded here by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary">
+                    <h3 style="margin-bottom: 1.5rem; color: #343a40;">Resumo do Pedido</h3>
+                    
+                    <div id="cart-summary-container">
+                        <!-- Summary will be loaded here by JavaScript -->
+                    </div>
+
+                    <!-- Checkout Form -->
+                    <form class="checkout-form" id="checkout-form">
+                        <div class="form-section">
+                            <h4>Informações Pessoais</h4>
+                            <div class="form-group">
+                                <input type="text" placeholder="Nome Completo" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" placeholder="WhatsApp" required>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h4>Forma de Pagamento</h4>
+                            <div class="payment-methods">
+                                <label class="payment-method" for="pix">
+                                    <input type="radio" id="pix" name="payment" value="pix" checked>
+                                    <i class="fab fa-pix payment-icon pix-icon"></i>
+                                    <div>
+                                        <strong>PIX</strong>
+                                        <div style="font-size: 0.9rem; color: #6c757d;">Aprovação instantânea</div>
+                                    </div>
+                                </label>
+                                
+                                <label class="payment-method" for="card">
+                                    <input type="radio" id="card" name="payment" value="card">
+                                    <i class="fas fa-credit-card payment-icon card-icon"></i>
+                                    <div>
+                                        <strong>Cartão de Crédito</strong>
+                                        <div style="font-size: 0.9rem; color: #6c757d;">Parcelamento disponível</div>
+                                    </div>
+                                </label>
+                                
+                                <label class="payment-method" for="boleto">
+                                    <input type="radio" id="boleto" name="payment" value="boleto">
+                                    <i class="fas fa-barcode payment-icon boleto-icon"></i>
+                                    <div>
+                                        <strong>Boleto Bancário</strong>
+                                        <div style="font-size: 0.9rem; color: #6c757d;">Vencimento em 3 dias</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary checkout-btn">
+                            <i class="fas fa-lock"></i>
+                            Finalizar Pedido
+                        </button>
+                        
+                        <div style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: #6c757d;">
+                            <i class="fas fa-shield-alt"></i>
+                            Pagamento 100% seguro
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-play-circle"></i>
+                        <span>StreamMax</span>
+                    </div>
+                    <p>Entretenimento premium ao seu alcance.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="planos.html">Planos</a></li>
+                        <li><a href="index.html#como-funciona">Como Funciona</a></li>
+                        <li><a href="index.html#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>WhatsApp: (11) 99999-9999</p>
+                    <p>Email: contato@streammax.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 StreamMax. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Cart management
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Plan configurations
+        const planConfigs = {
+            basico: {
+                name: 'Plano Básico',
+                price: 29,
+                features: ['500+ Canais', 'HD', '1 Dispositivo'],
+                description: 'Ideal para iniciantes'
+            },
+            premium: {
+                name: 'Plano Premium',
+                price: 49,
+                features: ['1000+ Canais', '4K', '3 Dispositivos', 'P2P'],
+                description: 'Mais popular'
+            },
+            familia: {
+                name: 'Plano Família',
+                price: 79,
+                features: ['1500+ Canais', '4K Ultra', '5 Dispositivos', 'P2P Premium'],
+                description: 'Máximo entretenimento'
+            }
+        };
+
+        function loadCart() {
+            const container = document.getElementById('cart-items-container');
+            const summaryContainer = document.getElementById('cart-summary-container');
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>Seu carrinho está vazio</h3>
+                        <p>Adicione alguns planos para continuar</p>
+                        <a href="planos.html" class="btn btn-primary" style="margin-top: 1rem;">
+                            Ver Planos
+                        </a>
+                    </div>
+                `;
+                summaryContainer.innerHTML = '';
+                return;
+            }
+
+            // Render cart items
+            container.innerHTML = cart.map(item => {
+                const config = planConfigs[item.type];
+                return `
+                    <div class="cart-item">
+                        <div class="item-icon">
+                            <i class="fas fa-tv"></i>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name">${config.name}</div>
+                            <div class="item-description">${config.description}</div>
+                            <div class="item-features">
+                                ${config.features.map(feature => 
+                                    `<span class="feature-tag">${feature}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                        <div class="item-price">
+                            <div class="price-amount">R$ ${config.price}</div>
+                            <div class="price-period">/mês</div>
+                        </div>
+                        <button class="remove-item" onclick="removeFromCart('${item.type}')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+
+            // Render summary
+            const subtotal = cart.reduce((sum, item) => sum + planConfigs[item.type].price, 0);
+            const discount = subtotal > 50 ? 10 : 0;
+            const total = subtotal - discount;
+
+            summaryContainer.innerHTML = `
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>R$ ${subtotal}</span>
+                </div>
+                ${discount > 0 ? `
+                    <div class="summary-row">
+                        <span>Desconto</span>
+                        <span style="color: #28a745;">-R$ ${discount}</span>
+                    </div>
+                ` : ''}
+                <div class="summary-row">
+                    <span>Total</span>
+                    <span>R$ ${total}</span>
+                </div>
+            `;
+        }
+
+        function removeFromCart(planType) {
+            cart = cart.filter(item => item.type !== planType);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();
+        }
+
+        function addToCart(planType) {
+            if (!cart.find(item => item.type === planType)) {
+                cart.push({ type: planType });
+                localStorage.setItem('cart', JSON.stringify(cart));
+                loadCart();
+            }
+        }
+
+        // Payment method selection
+        document.querySelectorAll('input[name="payment"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('.payment-method').forEach(method => {
+                    method.classList.remove('selected');
+                });
+                this.closest('.payment-method').classList.add('selected');
+            });
+        });
+
+        // Form submission
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const orderData = {
+                items: cart,
+                customer: {
+                    name: formData.get('name') || this.querySelector('input[type="text"]').value,
+                    email: formData.get('email') || this.querySelector('input[type="email"]').value,
+                    phone: formData.get('phone') || this.querySelector('input[type="tel"]').value
+                },
+                payment: formData.get('payment'),
+                total: cart.reduce((sum, item) => sum + planConfigs[item.type].price, 0)
+            };
+
+            // Simulate order processing
+            alert('Pedido realizado com sucesso! Você receberá as instruções de pagamento por email.');
+            
+            // Clear cart
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Redirect to success page or home
+            window.location.href = 'index.html';
+        });
+
+        // Check for selected plan from URL params or localStorage
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedPlan = urlParams.get('plan') || JSON.parse(localStorage.getItem('selectedPlan') || '{}').type;
+        
+        if (selectedPlan && !cart.find(item => item.type === selectedPlan)) {
+            addToCart(selectedPlan);
+        }
+
+        // Initialize
+        loadCart();
+        
+        // Set first payment method as selected
+        document.querySelector('.payment-method').classList.add('selected');
+    </script>
+</body>
+</html>
+
